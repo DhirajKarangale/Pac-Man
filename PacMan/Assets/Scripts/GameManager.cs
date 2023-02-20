@@ -3,7 +3,7 @@
 public class GameManager : MonoBehaviour
 {
     [SerializeField] SpriteRenderer cellPrefab;
-    [SerializeField] Enemy enemy;
+    [SerializeField] Player player;
 
     private Camera cam;
     private Pathfinding pathfinding;
@@ -14,23 +14,83 @@ public class GameManager : MonoBehaviour
         cam = Camera.main;
         cells = new SpriteRenderer[20, 10];
         pathfinding = new Pathfinding(20, 10);
-        CreateGrid(pathfinding.GetGrid());
+        SpwanGrid(pathfinding.GetGrid());
+        AutoBlockGrid(pathfinding.GetGrid());
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            enemy.SetTargetPosition(MousePos());
+            player.SetTargetPosition(MousePos());
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            Vector3 mouseWorldPosition = MousePos();
-            pathfinding.GetGrid().GetXY(mouseWorldPosition, out int x, out int y);
-            pathfinding.GetNode(x, y).SetIsWalkable(!pathfinding.GetNode(x, y).isWalkable);
-            cells[x, y].color = Color.black;
+            Vector2Int coordinates = pathfinding.GetGrid().GetCoordinates(MousePos());
+            BlockArea(coordinates.x, coordinates.y);
         }
+    }
+
+    private void AutoBlockGrid(Grid<PathNode> grid)
+    {
+        int x = 2;
+        int y = 0;
+
+        for (y = 0; y <= 7; y++)
+        {
+            BlockArea(x, y);
+        }
+
+        x = 4;
+        for (y = 9; y >= 1; y--)
+        {
+            BlockArea(x, y);
+        }
+
+        y = 2;
+        for (x = 6; x <= 12; x++)
+        {
+            BlockArea(x, y);
+        }
+
+        y = 7;
+        for (x = 6; x <= 12; x++)
+        {
+            BlockArea(x, y);
+        }
+
+        x = 6;
+        for (y = 6; y >= 3; y--)
+        {
+            if (y == 4) continue;
+            BlockArea(x, y);
+        }
+
+        x = 12;
+        for (y = 6; y >= 3; y--)
+        {
+            if (y == 4) continue;
+            BlockArea(x, y);
+        }
+
+        y = 3;
+        for (x = 14; x <= 17; x++)
+        {
+            BlockArea(x, y);
+        }
+
+        x = 18;
+        for (y = 1; y <= 9; y++)
+        {
+            BlockArea(x, y);
+        }
+    }
+
+    private void BlockArea(int x, int y)
+    {
+        pathfinding.GetNode(x, y).SetIsWalkable(false);
+        cells[x, y].color = Color.black;
     }
 
     private Vector3 MousePos()
@@ -38,7 +98,7 @@ public class GameManager : MonoBehaviour
         return cam.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void CreateGrid(Grid<PathNode> grid)
+    private void SpwanGrid(Grid<PathNode> grid)
     {
         for (int x = 0; x < grid.width; x++)
         {
@@ -51,5 +111,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 }
