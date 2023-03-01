@@ -2,6 +2,7 @@
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] Color normalColor;
     [SerializeField] SpriteRenderer cellPrefab;
     [SerializeField] Player player;
 
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
         cells = new SpriteRenderer[20, 10];
         pathfinding = new Pathfinding(20, 10);
         SpwanGrid(pathfinding.GetGrid());
-        AutoBlockGrid(pathfinding.GetGrid());
+        // AutoBlockGrid(pathfinding.GetGrid());
     }
 
     private void Update()
@@ -89,8 +90,11 @@ public class GameManager : MonoBehaviour
 
     private void BlockArea(int x, int y)
     {
-        pathfinding.GetNode(x, y).SetIsWalkable(false);
-        cells[x, y].color = Color.black;
+        pathfinding.GetNode(x, y).SetIsWalkable(!pathfinding.GetNode(x, y).isWalkable);
+        if (!pathfinding.GetNode(x, y).isWalkable)
+            cells[x, y].color = Color.black;
+        else
+            cells[x, y].color = normalColor;
     }
 
     private Vector3 MousePos()

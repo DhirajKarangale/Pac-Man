@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513a8d6027c4e984c9ea9691414fd4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalColor: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}
   cellPrefab: {fileID: 2115158643995846300, guid: c4d3491700283c340828c78f0c54c6dd, type: 3}
   player: {fileID: 2052222386}
 --- !u!4 &1228460025
@@ -280,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1941519204
 Animator:
   serializedVersion: 5

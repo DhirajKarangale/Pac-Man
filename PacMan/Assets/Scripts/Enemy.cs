@@ -13,4 +13,12 @@ public class Enemy : Character
 
         base.Update();
     }
+
+    public override void SetTargetPosition(Vector3 targetPosition)
+    {
+        Pathfinding.instance.moveStraight = 10;
+        Pathfinding.instance.moveDiagonal = 0;
+
+        base.SetTargetPosition(targetPosition);
+    }
 }

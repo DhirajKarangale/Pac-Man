@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetTargetPosition(Vector3 targetPosition)
+    public virtual void SetTargetPosition(Vector3 targetPosition)
     {
         pathIndex = 0;
         paths = Pathfinding.instance.FindPath(transform.position, targetPosition);

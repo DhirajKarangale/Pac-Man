@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Pathfinding
 {
-    private int moveStraight = 10;
-    private int moveDiagonal = 14;
+    internal int moveStraight = 10;
+    internal int moveDiagonal = 14;
 
     public static Pathfinding instance;
 
